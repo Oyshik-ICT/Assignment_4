@@ -9,7 +9,8 @@ This project is a Flask-based RESTful API for user management with JWT authentic
 3. [Configuration](#configuration)
 4. [Running the Application](#running-the-application)
 5. [API Documentation](#api-documentation)
-6. [Database Migrations](#database-migrations)
+6. [Using the API](#using-the-api)
+7. [Database Migrations](#database-migrations)
 
 ## Prerequisites
 
@@ -63,11 +64,9 @@ This project is a Flask-based RESTful API for user management with JWT authentic
    ```
 
 2. Run the application:
-
    ```
    python run.py
    ```
-
    The application will start running on `http://localhost:5000`.
 
 ## API Documentation
@@ -80,16 +79,85 @@ http://localhost:5000/swagger
 
 This interactive documentation provides details on all available endpoints, request/response formats, and allows you to test the API directly from the browser.
 
-### Key Endpoints:
+## Using the API
 
-- `POST /register`: Register a new user
-- `POST /login`: Authenticate a user and receive a JWT token
-- `GET /users`: Get all users (admin only)
-- `GET /users/<user_id>`: Get a specific user
-- `PUT /users/<user_id>`: Update a user
-- `DELETE /users/<user_id>`: Delete a user (admin only)
+Here's a guide on how to use the main endpoints of the API using Swagger UI:
 
-For detailed information on request/response formats and authentication requirements, please refer to the Swagger documentation.
+### 1. Register a new user
+
+1. Navigate to the `/register` POST endpoint in Swagger UI.
+2. Click on "Try it out".
+3. Fill in the request body with user details:
+   ```json
+   {
+     "username": "newuser",
+     "first_name": "John",
+     "last_name": "Doe",
+     "email": "john@example.com",
+     "password": "securepassword",
+     "admin_code": "your-admin-code" // Include this only if registering as admin
+   }
+   ```
+4. Click "Execute" to send the request.
+
+### 2. Login
+
+1. Navigate to the `/login` POST endpoint.
+2. Click on "Try it out".
+3. Fill in the request body:
+   ```json
+   {
+     "username": "newuser",
+     "password": "securepassword"
+   }
+   ```
+4. Click "Execute" to get your JWT token.
+
+### 3. Using the JWT token
+
+For authenticated endpoints, you need to include the JWT token in the Authorization header:
+
+1. Click on the "Authorize" button at the top of the Swagger UI.
+2. In the "Value" field, enter: `Bearer your-jwt-token`
+3. Click "Authorize" and then "Close".
+
+Now all your requests will include this token.
+
+### 4. Get all users (Admin only)
+
+1. Make sure you're logged in as an admin and have set the JWT token.
+2. Navigate to the `/users` GET endpoint.
+3. Click "Try it out" and then "Execute".
+
+### 5. Get, Update, or Delete a specific user
+
+1. Navigate to the `/users/{user_id}` endpoint (GET, PUT, or DELETE).
+2. Click "Try it out".
+3. Enter the `user_id` in the path parameter field.
+4. For PUT requests, provide the updated user information in the request body.
+5. Click "Execute" to send the request.
+
+### 6. Reset Password
+
+To reset a password:
+
+1. Navigate to the `/forgot-password` POST endpoint.
+2. Click "Try it out".
+3. Provide the email in the request body:
+   ```json
+   {
+     "email": "user@example.com"
+   }
+   ```
+4. Click "Execute". This will send a reset link to the user's email.
+5. When the user receives the email, they should click on the reset link.
+6. The link will lead to the `/reset-password/<token>` GET endpoint, which verifies the token.
+7. If the token is valid, use the `/reset-password/<token>` POST endpoint to set a new password:
+   ```json
+   {
+     "new_password": "newsecurepassword"
+   }
+   ```
 
 ## Database Migrations
 

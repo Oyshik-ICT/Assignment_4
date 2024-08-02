@@ -1,35 +1,3 @@
-# from flask import Flask
-# from flask_sqlalchemy import SQLAlchemy
-# from flask_jwt_extended import JWTManager
-# from config import Config
-# from flask_migrate import Migrate
-
-# def create_app():
-#     app = Flask(__name__)
-#     # Initialize your app and database here
-#     db.init_app(app)
-#     migrate = Migrate(app, db)
-#     return app
-
-
-# db = SQLAlchemy()
-# jwt = JWTManager()
-
-# def create_app():
-#     app = Flask(__name__)
-#     app.config.from_object(Config)
-
-#     db.init_app(app)
-#     jwt.init_app(app)
-
-#     from app.routes.auth import auth as auth_blueprint
-#     from app.routes.user import user as user_blueprint
-
-#     app.register_blueprint(auth_blueprint)
-#     app.register_blueprint(user_blueprint)
-
-#     return app
-
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager

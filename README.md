@@ -139,25 +139,33 @@ Now all your requests will include this token.
 
 ### 6. Reset Password
 
-To reset a password:
+The password reset functionality can be tested and used through Swagger as follows:
 
-1. Navigate to the `/forgot-password` POST endpoint.
-2. Click "Try it out".
-3. Provide the email in the request body:
-   ```json
-   {
-     "email": "user@example.com"
-   }
-   ```
-4. Click "Execute". This will send a reset link to the user's email.
-5. When the user receives the email, they should click on the reset link.
-6. The link will lead to the `/reset-password/<token>` GET endpoint, which verifies the token.
-7. If the token is valid, use the `/reset-password/<token>` POST endpoint to set a new password:
-   ```json
-   {
-     "new_password": "newsecurepassword"
-   }
-   ```
+1. Use the `/auth/forgot-password` endpoint to request a password reset. Provide your email in the request body.
+
+2. You will receive an email with a reset link in the format: `/reset-password/<token>`.
+
+3. IMPORTANT: You need to manually copy the `<token>` part from this URL. This token is required for the next steps.
+
+4. In Swagger, navigate to the `/auth/reset-password/{token}` endpoint:
+
+   a. For the GET method:
+      - Paste the copied token into the `token` field.
+      - Execute the request to verify the token's validity.
+      - If valid, you'll receive a JSON response confirming the token and associated email.
+
+   b. For the POST method:
+      - Again, paste the copied token into the `token` field.
+      - In the request body, provide your new password:
+        ```json
+        {
+          "new_password": "your_new_password_here"
+        }
+        ```
+      - Execute the request to reset your password.
+
+5. If successful, you'll receive a confirmation message.
+
 
 ## Database Migrations
 
